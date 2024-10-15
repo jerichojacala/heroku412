@@ -1,0 +1,24 @@
+
+/* https://blog.hubspot.com/website/css-font-size*/
+/*https://blog.hubspot.com/website/change-text-color-css*/
+body{background-color: brown; border: 1px solid bisque; color: aliceblue;}
+p{color: aliceblue; font-style: italic;}
+h1{color:bisque;font-size:xxx-large; text-align: center; margin: 30px;}
+h2{padding:20px;
+margin-top: 50px;}
+h2{color:bisque;text-align: center;}
+h3{color:bisque;text-align: center;}
+a{color:cadetblue;}
+/*https://granneman.com/webdev/coding/css/centertables*/
+table.center {
+    margin-left:auto; 
+    margin-right:auto;
+  }
+  /*https://blog.hubspot.com/website/css-margin-vs-padding*/
+table.activities{margin-top: 10px;}
+div{margin: 20px; padding: 10px; border: 1px solid bisque;}
+td{text-align: center;}
+div{
+    margin: auto;
+    text-align: center;
+}

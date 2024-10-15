@@ -1,0 +1,29 @@
+<!--mini_fb/templates/mini_fb/show_all_profiles.html-->
+{% extends 'mini_fb/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1>Show All Profiles</h1>
+
+<profile>
+    <table>
+        <tr>
+    <!--loop to display each article-->
+    {% for a in profiles %}
+    <td>
+        <h2><a href="{% url 'show_profile_page' a.pk %}">{{a.firstname}} {{a.lastname}}</a></h2>
+        
+        <h3>{{a.city}}</h3>
+        
+        <!--new: display the image URL stored in the database-->
+        <img src="{{a.image_url}}" alt="{{a.image_url}}" height="180" width="198">
+    </td>
+    {% if forloop.counter|divisibleby:5 and not forloop.last %} <!--after every fifth profile, a new row is started-->
+        </tr><tr>
+            {% endif %}
+    {% endfor %}
+    </tr>
+    </table>
+</profile>
+{% endblock %}

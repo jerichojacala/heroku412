@@ -1,0 +1,24 @@
+<!--templates/blog/base.html base HTML template with navbar and any reused HTML-->
+{% load static %}
+<html>
+    <head>
+        <title>
+            Our Blog
+        </title>
+        <link rel="stylesheet" href="{% static 'styles-blog.css' %}">
+    </head>
+
+    <body>
+        <nav>
+            <li>
+                <li><a href="{% url 'show_all' %}">Show All</a></li>
+                <li><a href="{% url 'random' %}">Random</a></li>
+            </li>
+        </nav>
+        <!--fill in this section with specific page detail-->
+        {% block content %}
+        <!--fill in this section with specific page detail-->
+        {% endblock %}
+
+    </body>
+</html>

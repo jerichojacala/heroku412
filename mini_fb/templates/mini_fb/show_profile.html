@@ -1,0 +1,33 @@
+<!--mini_fb/templates/mini_fb/show_profile.html-->
+{% extends 'mini_fb/base.html' %}
+
+
+{% block content %}
+<main class="grid-container"></main>
+
+<profile class="featured">
+    <div>
+        <h2><a href="{% url 'show_profile_page' profile.pk %}">{{profile.firstname}} {{profile.lastname}}</a></h2>
+        <h3>{{profile.city}}</h3>
+        
+        <!--new: display the image URL stored in the database-->
+        <img src="{{profile.image_url}}" alt="{{profile.image_url}}" height="180" width="198">
+    </div>
+</profile>
+
+<!--show the status messages-->
+<div>
+    <h2><a href="{% url 'create_status' profile.pk %}">Create a status message</a></h2>
+    {% if profile.get_status_messages %}
+    <h2>Status Messages</h2>
+    {% for c in profile.get_status_messages %}
+    <div>
+        <strong>{{c.message}} at {{c.timestamp}}</strong>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h2>No Status Messages</h2>
+    {% endif %}
+</div>
+</main>
+{% endblock %}

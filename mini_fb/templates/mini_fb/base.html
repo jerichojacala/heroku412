@@ -1,0 +1,24 @@
+<!--templates/mini_fb/base.html base HTML template with navbar and any reused HTML-->
+{% load static %}
+<html>
+    <head>
+        <title>
+            Mini Facebook
+        </title>
+        <link rel="stylesheet" href="{% static 'styles-blog.css' %}">
+    </head>
+
+    <body>
+        <nav>
+            <li>
+                <li><a href="{% url 'show_all_profiles' %}">Show All Profiles</a></li>
+                <li><a href="{% url 'create_profile' %}">Create Profile</a></li>
+            </li>
+        </nav>
+        <!--fill in this section with specific page detail-->
+        {% block content %}
+        <!--fill in this section with specific page detail-->
+        {% endblock %}
+
+    </body>
+</html>

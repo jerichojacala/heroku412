@@ -1,0 +1,11 @@
+<!--HTML template for show_all page-->
+{% extends 'quotes/base.html' %}
+{% block content %}
+        {% for item in imgquote %}
+        <!--take a random image of winston and a random quote-->
+        <div><img src={{item.image}} alt="pictureofwinston", width="800"> 
+            <h2>"{{item.quote}}"</h2>
+        </div>
+        {% endfor %}
+
+        {% endblock %}

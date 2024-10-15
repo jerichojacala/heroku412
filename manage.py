@@ -2,16 +2,11 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from django.core.wsgi import get_wsgi_application
 
-"""Run administrative tasks."""
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cs412.settings')
-"""Handler for wsgi for vercel"""
-app = get_wsgi_application()
 
 def main():
-
-    
+    """Run administrative tasks."""
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cs412.settings")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -23,5 +18,5 @@ def main():
     execute_from_command_line(sys.argv)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

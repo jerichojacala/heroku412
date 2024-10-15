@@ -17,6 +17,7 @@ h1, h2, h3 {
 
 p {
     color: #828b82;
+    text-align: center;
 }
 
 header {
@@ -58,7 +59,6 @@ profile img, profile.featured img {
 
 article p, article h3 {
     margin: 20px 10px;
-
 }
 
 nav li {
@@ -90,7 +90,8 @@ div{
     text-align: center;
 }
 
-table{
+table, th, td{
     margin: auto;
     text-align: center;
+    border: 1px solid black;
 }

@@ -1,5 +1,6 @@
 #mini_fb/views.py
 #define the views for the blog app
+#Jericho Jacala jjacala@bu.edu
 
 from django.shortcuts import render
 

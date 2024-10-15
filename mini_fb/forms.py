@@ -1,4 +1,6 @@
 # mini_fb/forms.py
+#define forms for the app
+#Jericho Jacala jjacala@bu.edu
 
 from django import forms
 from .models import Profile, StatusMessage

@@ -1,5 +1,6 @@
 ## mini_fb/urls.py
 ## define the URLs for this app
+#Jericho Jacala jjacala@bu.edu
 
 from django.urls import path
 from django.conf import settings

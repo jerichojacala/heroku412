@@ -1,5 +1,6 @@
 #mini_fb/models.py
 #Define the data objects for our application
+#Jericho Jacala jjacala@bu.edu
 
 from django.db import models
 

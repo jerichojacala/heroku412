@@ -15,7 +15,7 @@
         <h3>{{article.author}} at {{article.published}}</h3>
         
         <!--new: display the image URL stored in the database-->
-        <img src="{{article.image_url}}" alt="{{article.image_url}}">
+        <img src="{{article.image_file.url}}" alt="{{article.image_file.url}}">
         <p>
             {{article.text}}
         </p>

@@ -6,7 +6,7 @@
 
 <h2>Create a status message for {{profile}}</h2>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 {% csrf_token %}
     <!--token to ensure that this came from a valid form-->
 
@@ -15,6 +15,7 @@
         <tr>
             <td></td>
             <td><input type="submit" name="submit", value="Create Status Message">
+                <input type="file" name="files" multiple />
         </form>
         <form action="{% url 'show_profile_page' profile.pk %}"> <!--take back to the profile page if status message canceled-->
             <input type="submit" name="Cancel", value="Cancel">

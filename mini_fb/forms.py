@@ -20,3 +20,15 @@ class CreateProfileForm(forms.ModelForm):
         '''Associate this HTML form with the Profile model'''
         model = Profile #the model we are looking to create
         fields = ['firstname','lastname','city','email','image_url'] #the fields the form must specify
+
+class UpdateProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ['city','email','image_url'] #the fields the form must specify
+
+class UpdateStatusForm(forms.ModelForm):
+
+    class Meta:
+        model = StatusMessage
+        fields = ['message'] #the fields the form must specify

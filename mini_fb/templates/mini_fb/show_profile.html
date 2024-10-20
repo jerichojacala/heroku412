@@ -21,13 +21,14 @@
                 </tr>
             
         </table>
-        
+        <h4><a href="{% url 'update_profile' profile.pk %}">Update Profile</a></h4>
     </div>
+    
 </profile>
 
 <!--show the status messages-->
 <div>
-    <h2><a href="{% url 'create_status' profile.pk %}">Create a status message</a></h2>
+    <h4><a href="{% url 'create_status' profile.pk %}">Create a status message</a></h4>
     {% if profile.get_status_messages %}
     <h2>Status Messages</h2>
     <table>
@@ -36,6 +37,9 @@
             <td>
                 
         <strong>{{c.message}} at {{c.timestamp}}</strong>
+        <h4><a href="{% url 'delete_status' c.pk %}">Delete status message</a></h4>
+        <h4><a href="{% url 'update_status' c.pk %}">Update status message</a></h4>
+
             {% for img in c.get_images %}
 <img src='{{img.imagefile.url}}' alt='{{img.imagefile.url}}' width="200">
                 
@@ -44,7 +48,9 @@
     {% endfor %}
 
         </tr>
+        
         {% endfor %}
+        
     </table>
     
     {% else %}

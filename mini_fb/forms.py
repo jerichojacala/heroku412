@@ -22,13 +22,13 @@ class CreateProfileForm(forms.ModelForm):
         fields = ['firstname','lastname','city','email','image_url'] #the fields the form must specify
 
 class UpdateProfileForm(forms.ModelForm):
-
+    '''a form to update a profile'''
     class Meta:
         model = Profile
         fields = ['city','email','image_url'] #the fields the form must specify
 
 class UpdateStatusForm(forms.ModelForm):
-
+    '''a form to update a StatusMessage'''
     class Meta:
         model = StatusMessage
         fields = ['message'] #the fields the form must specify

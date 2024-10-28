@@ -5,11 +5,12 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from .models import * #import the models
 from .forms import *
 from django.urls import reverse
 from typing import Any
+from django.shortcuts import get_object_or_404, redirect
 
 #class-based view
 class ShowAllProfilesView(ListView):
@@ -139,3 +140,27 @@ class UpdateStatusMessageView(UpdateView):
          # Get the profile related to the status message
         profile = self.get_object().profile
         return reverse('show_profile_page', kwargs={'pk': profile.pk})
+    
+class CreateFriendView(View):
+    '''view to add a friend to the profile'''
+    def dispatch(self, request, *args, **kwargs):
+        '''function to add a friend'''
+        #find the Profile identified by the PK from the URL pattern
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        other_profile = Profile.objects.get(pk=self.kwargs['other_pk'])
+
+        profile.add_friend(other_profile)
+
+        return redirect('show_profile_page', pk=profile.pk)
+    
+class ShowFriendSuggestionsView(DetailView):
+    '''view to show the friend suggestions'''
+    model = Profile #the model to display
+    template_name = "mini_fb/friend_suggestions.html"
+    context_object_name = "profile"
+
+class ShowNewsFeedView(DetailView):
+    '''Show the newsfeed for a particular profile'''
+    model = Profile
+    template_name = "mini_fb/news_feed.html"
+    context_object_name = "profile"

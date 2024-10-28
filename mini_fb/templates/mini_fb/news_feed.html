@@ -1,0 +1,37 @@
+<!--mini_fb/templates/mini_fb/news_feed.html-->
+<!--Jericho Jacala jjacala@bu.edu-->
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+
+<h2><a href="{% url 'show_profile_page' profile.pk %}">Back to {{profile.firstname}}'s page</a></h2>
+
+<h2>News Feed for {{profile.firstname}} {{profile.lastname}}</h2>
+{% if profile.get_news_feed %}
+    <table>
+        {% for c in profile.get_news_feed %}
+        <tr>
+            <td>
+        <img src='{{c.profile.image_url}}' alt='{{c.profile.image_url}}' width="50">        
+        <strong>{{c.profile}} at {{c.timestamp}}</strong>
+        <p>{{c.message}}</p>
+        <h4><a href="{% url 'delete_status' c.pk %}">Delete status message</a></h4>
+        <h4><a href="{% url 'update_status' c.pk %}">Update status message</a></h4>
+
+            {% for img in c.get_images %}
+<img src='{{img.imagefile.url}}' alt='{{img.imagefile.url}}' width="200">
+                
+            
+        
+    {% endfor %}
+
+        </tr>
+        
+        {% endfor %}
+        
+    </table>
+    
+    {% else %}
+    <h2>No News</h2>
+    {% endif %}
+{% endblock %}

@@ -49,4 +49,7 @@ class Comment(models.Model):
     def __str__(self):
         '''Return the string representation of this comment'''
         return f'{self.text}'
+
+
+
     

@@ -4,6 +4,7 @@
 
 from django.db import models
 from itertools import chain
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -16,6 +17,7 @@ class Profile(models.Model):
     city = models.TextField(blank=False)
     email = models.TextField(blank=False)
     image_url = models.URLField(blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         '''Return a string representation of this object'''
@@ -30,12 +32,12 @@ class Profile(models.Model):
     
     def add_friend(self, other):
         '''adds a friend to a Profile'''
-        if not ((Friend.objects.filter((models.Q(profile1=self) & models.Q(profile2=other)) |(models.Q(profile1=other) & models.Q(profile2=self))).exists()) or self == other):
-            Friend.objects.create(profile1=self,profile2=other)
+        if not ((Friend.objects.filter((models.Q(profile1=self) & models.Q(profile2=other)) |(models.Q(profile1=other) & models.Q(profile2=self))).exists()) or self == other): #filter out friends that are already friended or self
+            Friend.objects.create(profile1=self,profile2=other) #add friend
     
     def get_friends(self):
         '''Returns the queryset of all friends'''
-        querylist = Friend.objects.filter(models.Q(profile1=self) | models.Q(profile2=self))
+        querylist = Friend.objects.filter(models.Q(profile1=self) | models.Q(profile2=self)) #create list of friendships that contain self
         friends = []
         for friend in querylist:
             if friend.profile1 == self:
@@ -76,6 +78,7 @@ class StatusMessage(models.Model):
     timestamp = models.DateTimeField(auto_now=True) #fields for StatusMessage
     message = models.TextField(blank=False)
     profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
+
     
     def __str__(self):
         '''Return a string representation of this object'''

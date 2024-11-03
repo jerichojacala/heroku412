@@ -15,8 +15,10 @@
         <img src='{{c.profile.image_url}}' alt='{{c.profile.image_url}}' width="50">        
         <strong>{{c.profile}} at {{c.timestamp}}</strong>
         <p>{{c.message}}</p>
-        <h4><a href="{% url 'delete_status' c.pk %}">Delete status message</a></h4>
-        <h4><a href="{% url 'update_status' c.pk %}">Update status message</a></h4>
+        {% if c.profile.pk == profile.pk %}
+            <h4><a href="{% url 'delete_status' c.pk %}">Delete status message</a></h4>
+            <h4><a href="{% url 'update_status' c.pk %}">Update status message</a></h4>
+        {% endif %}
 
             {% for img in c.get_images %}
 <img src='{{img.imagefile.url}}' alt='{{img.imagefile.url}}' width="200">

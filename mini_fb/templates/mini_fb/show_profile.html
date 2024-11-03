@@ -11,7 +11,7 @@
         <table>
                 <tr>
                     <td>
-                        <h2><a href="{% url 'show_profile_page' profile.pk %}">{{profile.firstname}} {{profile.lastname}}</a></h2>
+                        <h2><a href="{% url 'show_profile_page' %}">{{profile.firstname}} {{profile.lastname}}</a></h2>
                         <h3>{{profile.city}}</h3>
                         
                         <!--new: display the image URL stored in the database-->
@@ -21,7 +21,9 @@
                 </tr>
             
         </table>
-        <h4><a href="{% url 'update_profile' profile.pk %}">Update Profile</a></h4>
+        {% if request.user.is_authenticated and request.user == profile.user %}
+        <h4><a href="{% url 'update_profile' %}">Update Profile</a></h4>
+        {% endif %}
     </div>
     
 </profile>
@@ -53,14 +55,20 @@
     {% else %}
     <h2>{{profile.firstname}} has no Friends! What a loner!</h2>
     {% endif %}
-    <h2><a href="{% url 'friend_suggestions' profile.pk %}">Show Friend Suggestions</a></h2>
+    {% if request.user.is_authenticated and request.user == profile.user %}
+    <h2><a href="{% url 'friend_suggestions' %}">Show Friend Suggestions</a></h2>
+    {% endif %}
 </div>
 
-<h2><a href="{% url 'news_feed' profile.pk %}">Show News Feed</a></h2>
+{% if request.user.is_authenticated and request.user == profile.user %}
+<h2><a href="{% url 'news_feed' %}">Show News Feed</a></h2>
+{% endif %}
 
 <!--show the status messages-->
 <div>
-    <h2><a href="{% url 'create_status' profile.pk %}">Create a status message</a></h2>
+    {% if request.user.is_authenticated and request.user == profile.user %}
+    <h2><a href="{% url 'create_status' %}">Create a status message</a></h2>
+    {% endif %}
     {% if profile.get_status_messages %}
     <h2>Status Messages</h2>
     <table>
@@ -69,8 +77,10 @@
             <td>
                 
         <strong>{{c.message}} at {{c.timestamp}}</strong>
+        {% if request.user.is_authenticated and request.user == profile.user %}
         <h4><a href="{% url 'delete_status' c.pk %}">Delete status message</a></h4>
         <h4><a href="{% url 'update_status' c.pk %}">Update status message</a></h4>
+        {% endif %}
 
             {% for img in c.get_images %}
 <img src='{{img.imagefile.url}}' alt='{{img.imagefile.url}}' width="200">

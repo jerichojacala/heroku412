@@ -19,7 +19,7 @@
     <!--new: display the image URL stored in the database-->
     <img src="{{suggestion.image_url}}" alt="{{suggestion.image_url}}" height="180" width="198">
     <br>
-    <a href="{% url 'add_friend' profile.pk suggestion.pk %}">Add Friend</a>
+    <a href="{% url 'add_friend' suggestion.pk %}">Add Friend</a>
 </td>
 {% if forloop.counter|divisibleby:5 and not forloop.last %} <!--after every fifth profile, a new row is started-->
     </tr><tr>

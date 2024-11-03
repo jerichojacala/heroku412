@@ -9,17 +9,33 @@
     </head>
 
     <body>
+        <ul>
         <nav>
-            <li>
+
                 <li><a href="{% url 'show_all' %}">Show All</a></li>
                 <li><a href="{% url 'random' %}">Random</a></li>
+                {% if request.user.is_authenticated %}
                 <li><a href="{% url 'create_article' %}">Create Article</a></li>
-            </li>
-        </nav>
+                <!--<li><a href="{% url 'logout' %}">Logout</a></li>-->
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Logout">
+                </form>
+                {% else %}
+                <li><a href="{% url 'login1' %}">Login</a></li>
+                {% endif %}
+        </ul>
+        
+        {% if request.user.is_authenticated %}
+        {{request.user}}
+        {% else %}
+        <p>not logged in</p>
+        {% endif %}
+    </nav>
         <!--fill in this section with specific page detail-->
         {% block content %}
         <!--fill in this section with specific page detail-->
         {% endblock %}
-
+        
     </body>
 </html>

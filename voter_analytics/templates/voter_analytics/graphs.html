@@ -1,0 +1,28 @@
+<!-- templates/voter_analytics/voter_detail.html -->
+{% extends 'voter_analytics/base.html' %}
+{% block content %}
+
+<div class="container">
+    <h1>Graphs</h1>
+    <!--include the search-->
+    <div class="row">
+        <div>
+            {% include 'voter_analytics/search.html' %}
+        </div>
+    </div>
+    <!--display the graphs-->
+    <div class="row">
+        {{hist_div|safe}}
+    </div>
+    <div class="row">
+        {{pie_div|safe}}
+    </div>
+
+    <div class="row">
+        {{bar_div|safe}}
+    </div>
+        
+</div>    
+    
+{% endblock %}
+    

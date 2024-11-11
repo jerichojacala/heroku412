@@ -1,0 +1,145 @@
+<!--voter_analytics/search.html-->
+
+<h3>Search</h3>
+
+<form action="">
+    <table>
+        <tr>
+            <th>Party</th>
+            <th>Voter Score</th>
+            <th>Min DOB</th>
+            <th>Max DOB</th>
+            <th>Elections Voted</th>
+        </tr>
+        <tr>
+
+            <td>
+                {% if party %}
+                <select name="party">
+                    <option value="">--Select Party--</option>
+                    <option value="D"{% if party == "D" %}selected{% endif %}>D</option>
+                    <option value="R"{% if party == "R" %}selected{% endif %}>R</option>
+                    <option value="U"{% if party == "U" %}selected{% endif %}>U</option>
+                    <option value="CC"{% if party == "CC" %}selected{% endif %}>CC</option>
+                    <option value="L"{% if party == "L" %}selected{% endif %}>L</option>
+                    <option value="T"{% if party == "T" %}selected{% endif %}>T</option>
+                    <option value="O"{% if party == "O" %}selected{% endif %}>O</option>
+                    <option value="G"{% if party == "G" %}selected{% endif %}>G</option>
+                    <option value="J"{% if party == "J" %}selected{% endif %}>J</option>
+                    <option value="Q"{% if party == "Q" %}selected{% endif %}>Q</option>
+                    <option value="FF"{% if party == "FF" %}selected{% endif %}>FF</option>
+                </select>
+                {% else %}
+                <select name="party">
+                    <option value="">--Select Party--</option>
+                    <option value="">--Select Party--</option>
+                    <option value="D">D</option>
+                    <option value="R">R</option>
+                    <option value="U">U</option>
+                    <option value="CC">CC</option>
+                    <option value="L">L</option>
+                    <option value="T">T</option>
+                    <option value="O">O</option>
+                    <option value="G">G</option>
+                    <option value="J">J</option>
+                    <option value="Q">Q</option>
+                    <option value="FF">FF</option>
+                </select>
+                {% endif %}
+            </td>
+            <td>
+                {% if voter_score %}
+                <select name="voter_score">
+                    <option value="">--Select Voter Score</option>
+                    <option value="0"{% if voter_score == "0" %}selected{% endif %}>0</option>
+                    <option value="1"{% if voter_score == "1" %}selected{% endif %}>1</option>
+                    <option value="2"{% if voter_score == "2" %}selected{% endif %}>2</option>
+                    <option value="3"{% if voter_score == "3" %}selected{% endif %}>3</option>
+                    <option value="4"{% if voter_score == "4" %}selected{% endif %}>4</option>
+                    <option value="5"{% if voter_score == "5" %}selected{% endif %}>5</option>
+                </select>
+                {% else %}
+                <select name="voter_score">
+                    <option value="">--Select Voter Score--</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                {% endif %}
+            </td>
+            <td>
+                {% if min_dob %}
+                <select name="min_dob">
+                    {% for year in birth_years %}
+                        <option value="{{ year }}"{% if min_dob == year|stringformat:"s" %}selected{% endif %}>{{ year }}</option>
+                    {% endfor %}
+                </select>
+
+                {% else %}
+                <select name="min_dob">
+                    <option value="">--Select Min DOB--</option>
+                    {% for year in birth_years %}
+                        <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+                {% endif %}
+            </td>
+            <td>
+                {% if min_dob %}
+                <select name="max_dob">
+                    {% for year in birth_years %}
+                        <option value="{{ year }}"{% if max_dob == year|stringformat:"s" %}selected{% endif %}>{{ year }}</option>
+                    {% endfor %}
+                </select>
+                {% else %}
+                <select name="max_dob">
+                    <option value="">--Select Max DOB--</option>
+                    {% for year in birth_years %}
+                        <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+                {% endif %}
+            </td>
+            <td>
+                {% if v20state %}
+                2020 State Election:<input type="checkbox" name="v20state" value="true" checked="true"><br>
+                {% else %}
+                2020 State Election:<input type="checkbox" name="v20state" value="true"><br>
+                {% endif %}
+
+                {% if v21town %}
+                2021 Town Election:<input type="checkbox" name="v21town" value="true" checked="true"><br>
+                {% else %}
+                2021 Town Election:<input type="checkbox" name="v21town" value="true"><br>
+                {% endif %}
+
+                {% if v21primary %}
+                2021 Primary Election:<input type="checkbox" name="v21primary" value="true" checked="true"><br>
+                {% else %}
+                2021 Primary Election:<input type="checkbox" name="v21primary" value="true"><br>
+                {% endif %}
+
+                {% if v22general %}
+                2022 General Election:<input type="checkbox" name="v22general" value="true" checked="true"><br>
+                {% else %}
+                2022 General Election:<input type="checkbox" name="v22general" value="true"><br>
+                {% endif %}
+
+                {% if v23town %}
+                2023 Town Election:<input type="checkbox" name="v23town" value="true" checked="true"><br>
+                {% else %}
+                2023 Town Election:<input type="checkbox" name="v23town" value="true"><br>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit">
+            </td>
+        </tr>
+    </table>
+</form>

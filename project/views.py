@@ -167,12 +167,6 @@ class CreateScheduleView(LoginRequiredMixin,CreateView):
     def form_valid(self,form):
         '''This method is called after the form is validated, before saving data to the database'''
 
-        #find the Course identified by the PK from the URL pattern
-        course = Course.objects.get(pk=self.kwargs['pk'])
-
-        #attach this Course to the instance of the StatusMessage to set its FK
-        form.instance.course = course #like: review.course = course
-
         students = Student.objects.filter(user=self.request.user)
         student = students.first()
 

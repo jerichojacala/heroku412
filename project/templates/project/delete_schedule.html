@@ -1,0 +1,23 @@
+<!--project/templates/project/delete_schedule.html-->
+<!--Jericho Jacala jjacala@bu.edu-->
+<!--template to delete a schedule-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+  <h2>Are you sure you want to delete this schedule?</h2>
+  <p>{{schedule.title}}</p>
+
+  <!-- Form to confirm deletion -->
+   <div>
+    <form method="POST" action="">
+        {% csrf_token %}<!--token to ensure that this came from a valid form-->
+        <button type="submit">Confirm Delete</button>
+      </form>
+    
+      <!-- Form to cancel deletion and return to the student page -->
+      <form method="GET" action="{% url 'show_student_page' schedule.student.pk %}">
+        <button type="submit">Cancel</button>
+      </form>
+   </div>
+  
+{% endblock %}

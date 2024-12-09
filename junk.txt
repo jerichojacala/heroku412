@@ -1,0 +1,43 @@
+class CreateRegistrationView(LoginRequiredMixin,CreateView):
+    '''
+    A view to create a Schedule for a Student
+    '''
+
+    form_class = CreateRegistrationForm
+    template_name = "project/create_registration_form.html"
+    model = Registration
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        '''Get the student field to find its primary key'''
+        # Get the context data from the superclass
+        context = super().get_context_data(**kwargs)
+
+        schedule = Schedule.objects.get(pk=self.kwargs['pk'])
+
+        #add the course from URL parameters into instance
+        context['schedule'] = schedule
+        return context
+
+
+    def get_success_url(self) -> str:
+        '''Redirect to a URL on successful form submission'''
+        # Get the profile related to the status message
+        schedule = Schedule.objects.get(pk=self.kwargs['pk'])
+        return reverse('show_student_page', kwargs={'pk': schedule.student.pk})
+    
+    def form_valid(self,form):
+        '''This method is called after the form is validated, before saving data to the database'''
+
+        #find the Course identified by the PK from the URL pattern
+        schedule = Schedule.objects.get(pk=self.kwargs['pk'])
+
+        #attach this Course to the instance of the StatusMessage to set its FK
+        form.instance.schedule = schedule #like: review.course = course
+
+        if (Registration.objects.filter(schedule=form.instance.schedule, course=form.instance.course).exists()):
+            messages.error(self.request, "An identical record already exists.")
+            return super().form_invalid(form)
+        
+
+        #delegate work to superclass form
+        return super().form_valid(form)

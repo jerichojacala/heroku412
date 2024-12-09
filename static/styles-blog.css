@@ -6,17 +6,25 @@ body {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+title{
+    color: coral;
+}
+
 ul, li {
     padding: 0px;
     list-style-type: none;
+    color: red;
 }
 
-h1, h2, h3,h4 {
-    color: #767f7e; text-align: center;
+h2, h3,h4 {
+    color: rgb(83, 83, 83); text-align: center;
+}
+
+h1{
+    color: coral; text-align: center;
 }
 
 p {
-    color: #828b82;
     text-align: center;
 }
 
@@ -24,6 +32,7 @@ header {
     max-width: 1200px;
     margin: 40px auto;
     border-bottom: 1px solid #bbc7c7;
+    color: darkgrey;
 }
 .grid-container {
     background: #eee;

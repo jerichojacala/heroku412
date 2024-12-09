@@ -1,0 +1,30 @@
+<!--project/templates/project/update_student_form.html-->
+<!--Jericho Jacala jjacala@bu.edu-->
+<!--form to update student information-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h2>Update Profile for {{student.first_name}} {{student.last_name}}</h2>
+
+<p>
+    Fill in the form below to update your profile.
+</p>
+
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %} <!--token to ensure form is valid-->
+    <table>
+        {{form.as_table}} <!--display form as table-->
+        <tr>
+            <td></td>
+            <td><input type="submit" name="submit", value="Update Profile">
+        </form>
+        <form action="{% url 'show_student_page' student.pk %}">
+            <input type="submit" name="Cancel", value="Cancel"> <!--return to student page if we change our mind-->
+            </form>
+        </td>
+        </tr>
+    </table>
+    
+
+{% endblock %}

@@ -18,20 +18,11 @@ body {
     font-family: verdana;
   } */
   
-  table {
-    width: 90%; 
-    max-width: 1000px;
-    margin-left: 25px;
-    border-collapse: collapse;
-    text-decoration:none;
-  }
-  
-  td, th {
-    padding: 10px;
-    color: rgb(40, 40, 138);
-    font-family: verdana;
-    text-align: left; /* Align text in cells */
-  }
+  table, th, td{
+    margin: auto;
+    text-align: center;
+    border: 1px solid black;
+}
   
   /* Optionally, remove margins on td */
   td {

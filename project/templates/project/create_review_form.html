@@ -1,0 +1,28 @@
+<!--project/templates/project/create_review_form.html-->
+<!--Jericho Jacala jjacala@bu.edu-->
+<!--Form to create a review for a course-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h2>Create a status message for {{course}}</h2>
+
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+    <!--token to ensure that this came from a valid form-->
+
+    <table>
+        {{form.as_table}} <!--display form from view as a table-->
+        <tr>
+            <td></td>
+            <td><input type="submit" name="submit", value="Create Review">
+        </form>
+        <form action="{% url 'show_course_page' course.pk %}"> <!--take back to the profile page if status message canceled-->
+            <input type="submit" name="Cancel", value="Cancel">
+            </form>
+        </td>
+        </tr>
+    </table>
+    
+
+{% endblock %}

@@ -1,0 +1,64 @@
+<!--project/templates/project/show_course.html-->
+<!--Jericho Jacala jjacala@bu.edu-->
+{% extends 'project/base.html' %}
+
+
+{% block content %}
+<main class="grid-container"></main>
+
+<course class="featured">
+    <div>
+        <table>
+                <tr>
+                    <td>
+                        <h2>{{course.subschool}} {{course.department}} {{course.number}} taught by <a href="{% url 'show_professor_page' course.professor.pk %}">{{course.professor}}</a></h2>
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td>
+                        Average weekly load in hours: {% if course.get_reviews %}{{course.get_course_load}}{% else %}No Data{% endif %}<br>
+                        Average Satisfaction (out of 5): {% if course.get_reviews %}{{course.get_course_satisfaction}}{% else %}No Data{% endif %}
+                        <!--display course metrics-->
+                    </td>
+                </tr>
+            
+        </table>
+    </div>
+    
+</course>
+{% if request.user.is_authenticated %}
+    <h2><a href="{% url 'create_review' course.pk %}">Leave a review</a></h2> <!--leave a review if we're signed in-->
+{% endif %}
+<!--begin list of reviews for the course-->
+<div>
+    {% if course.get_reviews %} 
+    <h2>Reviews</h2>
+    <table>
+        {% for r in course.get_reviews %}
+        <tr>
+            <td>
+                
+        <strong>{{r.title}} by {{r.student}}</strong>
+        <h4>Average weekly hours: {{r.difficulty}} Satisfaction: {{r.satisfaction}}</h4>
+        <h4>Grade: {{r.grade}} Taken on: {{r.semester}} {{r.year}}</h4>
+        <p>{{r.notes}}</p>
+        {% if request.user.is_authenticated and request.user == r.student.user %}
+        <h4><a href="{% url 'delete_review' r.pk %}">Delete review</a></h4>
+        {% endif %}
+
+        </td>
+
+        </tr>
+        
+        {% endfor %}
+        
+    </table>
+    
+    {% else %}
+    <h2>No Reviews</h2>
+    {% endif %}
+</div>
+<!--end of list of reviews-->
+</main>
+{% endblock %}

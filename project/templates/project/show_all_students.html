@@ -1,0 +1,29 @@
+<!--project/templates/project/show_all_students.html-->
+<!--Jericho Jacala jjacala@bu.edu-->
+<!--template to show all students-->
+{% extends 'project/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1>Show All Students</h1>
+
+<student>
+    <table>
+        <tr>
+    <!--loop to display each student-->
+    {% for s in students %}
+    <td>
+        <h2><a href="{% url 'show_student_page' s.pk %}">{{s.first_name}} {{s.last_name}}</a></h2>
+        <h3>{{s.college}}</h3>
+        <img src='{% if s.image_file %}{{s.image_file.url}}{% else %}/media/placeholder.jpg{% endif %}' alt='Image' height="200" width="180">
+        <!--if no image is specified, we have a hardcoded placeholder image-->
+    </td>
+    {% if forloop.counter|divisibleby:5 and not forloop.last %} <!--after every fifth student, a new row is started-->
+        </tr><tr>
+            {% endif %}
+    {% endfor %}
+    </tr>
+    </table>
+</student>
+{% endblock %}

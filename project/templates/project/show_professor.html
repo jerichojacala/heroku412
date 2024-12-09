@@ -1,0 +1,36 @@
+<!--project/templates/project/show_professor.html-->
+<!--Jericho Jacala jjacala@bu.edu-->
+<!--professor detail page, lists the courses the professor teaches-->
+{% extends 'project/base.html' %}
+
+
+{% block content %}
+<main class="grid-container"></main>
+
+<professor class="featured">
+    <div>
+        <table>
+                <tr>
+                    <td>
+                        <h2>{{professor.first_name}} {{professor.last_name}}'s page</h2>
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td>
+                        <h4>Courses I teach!</h4>
+                    </td>
+                </tr>
+                {% for c in professor.get_courses %}
+                <tr>
+                    <td>
+                        <h2><a href="{% url 'show_course_page' c.pk %}">{{c.subschool}} {{c.department}} {{c.number}}</a></h2>
+                    </td>
+                </tr>
+                {% endfor %}
+        </table>
+    </div>
+    
+</professor>
+</main>
+{% endblock %}

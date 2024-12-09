@@ -1,0 +1,79 @@
+<!--project/templates/project/show_course.html-->
+<!--Jericho Jacala jjacala@bu.edu-->
+<!--detail page for students and their schedules-->
+{% extends 'project/base.html' %}
+
+
+{% block content %}
+<main class="grid-container"></main>
+
+<student class="featured">
+    <div>
+        <table>
+                <tr>
+                    <td>
+                        <h2><a href="{% url 'show_student_page' %}">{{student.first_name}} {{student.last_name}}</a></h2>
+                        
+                        <img src='{% if student.image_file %}{{student.image_file.url}}{% else %}/media/placeholder.jpg{% endif %}' alt='Image' width="200">
+                    </td>
+                    
+                </tr>
+            
+        </table>
+    </div>
+    {% if request.user.is_authenticated and request.user == student.user %}
+        <h4><a href="{% url 'update_student' %}">Update Profile</a></h4>
+    {% endif %}
+</student>
+
+{% if request.user.is_authenticated %}
+<div>
+    <h2><a href="{% url 'create_schedule' student.pk %}">Create a Schedule</a></h2>
+</div>
+{% endif %}
+
+<div>
+    {% if student.get_schedules %}
+    <h2>Schedules</h2>
+    <table>
+        <tr>
+        {% for s in student.get_schedules %}
+        
+            <td>
+                
+        <strong>{{s.title}}</strong><br>Estimated weekly hours: {{s.get_schedule_load}}
+        <table>
+        <tr>
+        {% for r in s.get_registrations %}
+        <td>
+        <p><a href="{% url 'show_course_page' r.course.pk %}">{{r.course.department}} {{r.course.number}}</a> taught by <a href="{% url 'show_professor_page' r.course.professor.pk %}">{{r.course.professor}}</a></p>
+        {% if request.user.is_authenticated and request.user == student.user %}
+            <p><a href="{% url 'delete_registration' r.pk %}">Delete Course From Schedule</a></p>
+        {% endif %}
+                    
+    </td>      
+            {% endfor %}
+        </tr>  
+        </table>
+        {% if request.user.is_authenticated and request.user == student.user %}
+            <h3><a href="{% url 'course_suggestions' s.pk %}">Add Course to Schedule</a></h3>
+            <h3><a href="{% url 'delete_schedule' s.pk %}">Delete Schedule</a></h3>
+        {% endif %}
+        </td>
+
+        
+        {% if forloop.counter|divisibleby:2 and not forloop.last %} <!--after every fifth profile, a new row is started-->
+        </tr><tr>
+        {% endif %}
+        {% endfor %}
+    </tr>
+        
+    </table>
+    
+    {% else %}
+    <h2>No Schedules</h2>
+    {% endif %}
+</div>
+
+</main>
+{% endblock %}

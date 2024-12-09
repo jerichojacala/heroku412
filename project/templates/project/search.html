@@ -1,0 +1,25 @@
+<!--project\templates\project\search.html-->
+<!--Jericho Jacala jjacala@bu.edu-->
+<!--when adding a course to a schedule, there might be thousands of records. this template allows us to search for certain classes-->
+{% block content %}
+<h1>Create a Registration</h1>
+
+
+<!-- Search Bar -->
+<form method="get" action="">
+    <div>
+        <label for="college">College:</label>
+        <input type="text" name="college" id="college" value="">
+    </div>
+    <div>
+        <label for="subschool">Subschool:</label>
+        <input type="text" name="subschool" id="subschool" value="">
+    </div>
+    <div>
+        <label for="department">Department:</label>
+        <input type="text" name="department" id="department" value="">
+    </div>
+    <button type="submit">Search</button>
+</form>
+
+{% endblock %}

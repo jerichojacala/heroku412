@@ -1,0 +1,27 @@
+<!--project/templates/project/show_all_courses.html-->
+<!--Jericho Jacala jjacala@bu.edu-->
+<!---page to show all students-->
+{% extends 'project/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1>Show All Courses</h1>
+
+<course>
+    <table>
+        <tr>
+    <!--loop to display each course-->
+    {% for c in courses %}
+    <td>
+        <h2><a href="{% url 'show_course_page' c.pk %}">{{c.subschool}} {{c.department}} {{c.number}}</a></h2>
+        <br>Taught by <a href="{% url 'show_professor_page' c.professor.pk %}">{{c.professor}}</a>
+    </td>
+    {% if forloop.counter|divisibleby:5 and not forloop.last %} <!--after every fifth course, a new row is started-->
+        </tr><tr>
+            {% endif %}
+    {% endfor %}
+    </tr>
+    </table>
+</course>
+{% endblock %}

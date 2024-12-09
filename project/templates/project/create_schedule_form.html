@@ -1,0 +1,28 @@
+<!--project/templates/project/create_schedule_form.html-->
+<!--Jericho Jacala jjacala@bu.edu-->
+<!--template to add a schedule to a profile-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h2>Create a schedule for {{student}}</h2>
+
+<form method="POST" enctype="multipart/form-data"> <!--copy pasted from mini_fb, probably do not need multipart encryption but it is there just in case-->
+{% csrf_token %}
+    <!--token to ensure that this came from a valid form-->
+
+    <table>
+        {{form.as_table}} <!--display form from view as a table-->
+        <tr>
+            <td></td>
+            <td><input type="submit" name="submit", value="Create Schedule">
+        </form>
+        <form action="{% url 'show_student_page' student.pk %}"> <!--take back to the profile page if schedule canceled-->
+            <input type="submit" name="Cancel", value="Cancel">
+            </form>
+        </td>
+        </tr>
+    </table>
+    
+
+{% endblock %}

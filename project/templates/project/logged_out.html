@@ -1,0 +1,13 @@
+<!--project/templates/project/logged_out.html-->
+<!--Jericho Jacala jjacala@bu.edu-->
+<!--confirmation page to show we have successfully logged out-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+  <h2>You have successfully logged out.</h2>
+  <div>
+    <li><a href="{% url 'login' %}">Sign in</a></li>
+  </div>
+  
+  
+{% endblock %}

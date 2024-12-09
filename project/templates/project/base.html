@@ -1,0 +1,35 @@
+<!--templates/project/base.html base HTML template with navbar and any reused HTML-->
+<!--Jericho Jacala jjacala@bu.edu-->
+{% load static %}
+<html>
+    <head>
+        <title>
+            <h1>CourseCompass</h1>
+        </title>
+        <link rel="stylesheet" href="{% static 'styles-blog.css' %}">
+    </head>
+
+    <h1>CourseCompass</h1>
+    <body>
+        <nav>
+            <li><a href="{% url 'show_all_courses' %}">Show All Courses</a></li>
+            <li><a href="{% url 'show_all_students' %}">Show All Students</a></li>
+            {% if request.user.is_authenticated %}
+            Logged in as: {{request.user}}
+            <li><a href="{% url 'show_student_page' %}">My Profile</a></li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}<!--token to ensure that this came from a valid form-->
+                    <input type="submit" value="Logout">
+                </form>
+                {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'create_student' %}">Create Profile</a></li>
+                {% endif %}
+        </nav>
+        <!--fill in this section with specific page detail-->
+        {% block content %}
+        <!--fill in this section with specific page detail-->
+        {% endblock %}
+
+    </body>
+</html>

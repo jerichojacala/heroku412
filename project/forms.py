@@ -50,4 +50,4 @@ class UpdateStudentForm(forms.ModelForm):
     class Meta:
         '''Associate with the Student model'''
         model = Student
-        fields = ['first_name','last_name','email','image_file'] #the fields the form must specify
+        fields = ['first_name','last_name','email','image_file','college'] #the fields the form must specify

@@ -13,7 +13,7 @@
                 <tr>
                     <td>
                         <h2><a href="{% url 'show_student_page' %}">{{student.first_name}} {{student.last_name}}</a></h2>
-                        
+                        <h3>{{student.college}}</h3>
                         <img src='{% if student.image_file %}{{student.image_file.url}}{% else %}/media/placeholder.jpg{% endif %}' alt='Image' width="200">
                     </td>
                     

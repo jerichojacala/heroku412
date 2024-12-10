@@ -395,7 +395,7 @@ class DeleteScheduleView(LoginRequiredMixin,DeleteView):
         student = self.get_object().student
         return reverse('show_student_page', kwargs={'pk': student.pk}) #return to the page of the student
     
-class ShowOthersView(LoginRequiredMixin,DetailView):
+class ShowOthersView(DetailView):
     '''view to show other students who have the course in their schedules'''
     model = Course #the model to display
     template_name = "project/show_others.html"

@@ -11,11 +11,11 @@
 
     <h1>CourseCompass</h1>
     <body>
-        <nav>
+        <nav style="background-color: orange; text-align: center;">
             <li><a href="{% url 'show_all_courses' %}">Show All Courses</a></li>
             <li><a href="{% url 'show_all_students' %}">Show All Students</a></li>
             <li><a href="{% url 'show_all_professors' %}">Show All Professors</a></li>
-            {% if request.user.is_authenticated %}
+            {% if request.user.is_authenticated %} <!--check if we are logged in-->
             Logged in as: {{request.user}}
             <li><a href="{% url 'show_student_page' %}">My Profile</a></li>
                 <form action="{% url 'logout' %}" method="POST">

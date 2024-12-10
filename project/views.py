@@ -250,8 +250,8 @@ class ShowRegistrationsView(LoginRequiredMixin,ListView):
         '''Returns the queryset of courses based on filters from the search'''
 
         qs = super().get_queryset()
-
-        college = self.request.GET.get('college', '').strip() #refine the queryset based on the search input
+        
+        college = self.request.GET.get('college', '').strip() #refine the queryset based on the search input and strip any leading spaces
         subschool = self.request.GET.get('subschool', '').strip()
         department = self.request.GET.get('department', '').strip()
         if college: #filter based on search criteria, ignoring capitalization and checking if the attribute contains the criteria, if nothing in the criteria, don't filter
@@ -394,3 +394,15 @@ class DeleteScheduleView(LoginRequiredMixin,DeleteView):
          # Get the student related to the schedule
         student = self.get_object().student
         return reverse('show_student_page', kwargs={'pk': student.pk}) #return to the page of the student
+    
+class ShowOthersView(LoginRequiredMixin,DetailView):
+    '''view to show other students who have the course in their schedules'''
+    model = Course #the model to display
+    template_name = "project/show_others.html"
+    context_object_name = "course" #context object we refer to as a scriptlet in the template
+
+    def get_object(self, queryset=None): #get the course from the URL parameters so we know which students to look for
+        if 'pk' in self.kwargs:
+            courses = Course.objects.filter(pk=self.kwargs['pk'])
+            course = courses.first()
+            return course

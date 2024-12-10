@@ -19,6 +19,7 @@
                     <td>
                         Average weekly load in hours: {% if course.get_reviews %}{{course.get_course_load}}{% else %}No Data{% endif %}<br>
                         Average Satisfaction (out of 5): {% if course.get_course_satisfaction %}{{course.get_course_satisfaction}}{% else %}No Data{% endif %}
+                        <br><a href="{% url 'show_others_page' course.pk %}">See everyone looking to take the class</a>
                         <!--display course metrics-->
                     </td>
                 </tr>
@@ -43,7 +44,7 @@
         <h4>Average weekly hours: {{r.difficulty}} Satisfaction: {{r.satisfaction}}</h4>
         <h4>Grade: {{r.grade}} Taken on: {{r.semester}} {{r.year}}</h4>
         <p>{{r.notes}}</p>
-        {% if request.user.is_authenticated and request.user == r.student.user %}
+        {% if request.user.is_authenticated and request.user == r.student.user %} <!--check if we are logged in as the author-->
         <h4><a href="{% url 'delete_review' r.pk %}">Delete review</a></h4>
         {% endif %}
 

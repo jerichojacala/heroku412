@@ -29,5 +29,34 @@
     </div>
     
 </professor>
+<!--loop through all reviews for the professor-->
+<div>
+    {% if professor.get_reviews %} 
+    <h2>All Reviews</h2>
+    <table>
+        {% for r in professor.get_reviews %} <!--loop through every review for the professor defined in the models file-->
+        <tr>
+            <td>
+        <h3><a href="{% url 'show_course_page' r.course.pk %}">{{r.course.subschool}} {{r.course.department}} {{r.course.number}}</a> at {{r.course.college}}</h3>        
+        <strong>{{r.title}} by {{r.student}}</strong>
+        <h4>Average weekly hours: {{r.difficulty}} Satisfaction: {{r.satisfaction}}</h4>
+        <h4>Grade: {{r.grade}} Taken on: {{r.semester}} {{r.year}}</h4>
+        <p>{{r.notes}}</p>
+        {% if request.user.is_authenticated and request.user == r.student.user %}
+        <h4><a href="{% url 'delete_review' r.pk %}">Delete review</a></h4>
+        {% endif %}
+
+        </td>
+
+        </tr>
+        
+        {% endfor %}
+        
+    </table>
+    
+    {% else %}
+    <h2>No Reviews</h2> <!--case for no reviews-->
+    {% endif %}
+</div>
 </main>
 {% endblock %}

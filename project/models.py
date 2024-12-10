@@ -85,6 +85,18 @@ class Course(models.Model):
         else:
             avg = 0 #sometimes we will have no reviews for a course, in this case return 0 to avoid errors
         return avg
+    
+    def get_students(self):
+        '''Return a qs of all students in this course'''
+        #get the instances of where the courses are scheduled
+        registrations = Registration.objects.filter(course=self)
+
+        #from these registrations, find all of these schedules where the registrations are present
+        schedule_ids = registrations.values_list('schedule_id', flat=True)
+
+        #query all students that have these schedules
+        students = Student.objects.filter(schedule__id__in=schedule_ids).distinct()
+        return students
 
 class Professor(models.Model):
     '''encapsulate the idea of a professor'''
@@ -113,9 +125,14 @@ class Professor(models.Model):
         else:
             avg = 0 #just in case we will have no courses for a professor, in this case return 0 to avoid errors
         return avg
+    
+    def get_reviews(self):
+        '''returns all reviews for a professor'''
+        reviews = Review.objects.filter(course__professor=self) #filter all reviews for which the course's professor that the review is linked to is this professor
+        return reviews
 
 class Schedule(models.Model):
-    '''encapsulate the idea of a schedule'''
+    '''encapsulate the idea of a schedule that a student might try making'''
     student = models.ForeignKey("Student", on_delete=models.CASCADE)
     title = models.TextField(blank=False)
     def __str__(self):
@@ -123,7 +140,7 @@ class Schedule(models.Model):
         return f'{self.title}'
     
     def get_registrations(self):
-        '''Returns the queryset of all friends'''
+        '''Returns the queryset of all registrations for a given schedule'''
         querylist = Registration.objects.filter(schedule=self) #create list of registrations for the schedule
         courses = []
         for registration in querylist:
@@ -153,7 +170,7 @@ class Schedule(models.Model):
     def add_registration(self, course):
         '''adds a course to a schedule'''
         if not (Registration.objects.filter(schedule=self, course=course).exists()): 
-            Registration.objects.create(schedule=self,course=course) #add friend
+            Registration.objects.create(schedule=self,course=course) #similar to add friend from mini_fb- how we create registrations manually
 
 
 class Registration(models.Model):

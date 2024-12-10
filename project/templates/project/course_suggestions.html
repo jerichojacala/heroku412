@@ -11,7 +11,7 @@
 
 
 {% if courses %}
-<h2>Schedule Suggestions for {{schedule.title}}</h2>
+<h2>Courses to add for {{schedule.title}}</h2>
 <table>
     <tr>
 <!--loop to display each course-->
@@ -19,9 +19,9 @@
 
         <td>
             <h2>
-
-                <a href="{% url 'show_course_page' course.pk %}">{{ course.subschool }} {{ course.department }} {{ course.number }}</a><br>
                 <p>{{ course.college }}</p>
+                <a href="{% url 'show_course_page' course.pk %}">{{ course.subschool }} {{ course.department }} {{ course.number }}</a>
+                
                 <h4><a href="{% url 'add_registration' schedule.pk course.pk %}">Add Course To Schedule</a></h4>
             </h2>
         </td>

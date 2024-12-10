@@ -47,7 +47,7 @@
         <tr>
         {% for r in s.get_registrations %}
         <td>
-        <p><a href="{% url 'show_course_page' r.course.pk %}">{{r.course.department}} {{r.course.number}}</a> taught by <a href="{% url 'show_professor_page' r.course.professor.pk %}">{{r.course.professor}}</a> at {{r.course.college}}</p>
+        <p><a href="{% url 'show_course_page' r.course.pk %}">{{r.course.subschool}} {{r.course.department}} {{r.course.number}}</a> taught by <a href="{% url 'show_professor_page' r.course.professor.pk %}">{{r.course.professor}}</a> at {{r.course.college}}</p>
         {% if request.user.is_authenticated and request.user == student.user %}
             <p><a href="{% url 'delete_registration' r.pk %}">Delete Course From Schedule</a></p>
         {% endif %}

@@ -1,0 +1,40 @@
+<!--project/templates/project/show_others.html-->
+<!--Jericho Jacala jjacala@bu.edu-->
+<!--detail page a given course- show all students with a schedule containing this course-->
+{% extends 'project/base.html' %}
+
+
+{% block content %}
+<main class="grid-container"></main>
+<div>
+    <h1>Students looking to take <a href="{% url 'show_course_page' course.pk %}">{{course.subschool}} {{course.department}} {{course.number}}</a> taught by <a href="{% url 'show_professor_page' course.professor.pk %}">{{course.professor}}</a></h1>
+    <h2>{{course.college}}</h2>
+
+</div>
+<div>
+    {% if course.get_students %} <!--first check if there are any students taking it at all-->
+    <h2>Students</h2>
+    <table>
+    <tr>   
+        {% for s in course.get_students %}
+    <td>
+        <h2><a href="{% url 'show_student_page' s.pk %}">{{s.first_name}} {{s.last_name}}</a></h2>
+        <h3>{{s.college}}</h3>
+        <img src='{% if s.image_file %}{{s.image_file.url}}{% else %}/media/placeholder.jpg{% endif %}' alt='Image' height="200" width="180">
+        <!--if no image is specified, we have a hardcoded placeholder image-->
+    </td>
+    {% if forloop.counter|divisibleby:5 and not forloop.last %} <!--after every fifth student, a new row is started-->
+        </tr><tr>
+    {% endif %}
+    {% endfor %}
+    </tr>
+        
+    </table>
+    
+    {% else %}
+    <h2>No Students</h2> <!--case for no students-->
+    {% endif %}
+</div>
+
+</main>
+{% endblock %}

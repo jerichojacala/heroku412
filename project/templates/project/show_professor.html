@@ -14,7 +14,7 @@
                     <td>
                         <h2>{{professor.first_name}} {{professor.last_name}}'s page of Courses</h2>
                         <h3>Teaching at {{professor.college}}</h3>
-                        <h3>Average satisfaction (0-5): {% if professor.get_professor_satisfaction %}{{professor.get_professor_satisfaction}}{% else %}No Data{% endif %}</h3>
+                        <h3>Average satisfaction (0-5):{{professor.get_professor_satisfaction}}</h3>
                     </td>
                     
                 </tr>

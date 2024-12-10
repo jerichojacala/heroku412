@@ -18,7 +18,7 @@
                 <tr>
                     <td>
                         Average weekly load in hours: {% if course.get_reviews %}{{course.get_course_load}}{% else %}No Data{% endif %}<br>
-                        Average Satisfaction (out of 5): {% if course.get_satisfaction %}{{course.get_course_satisfaction}}{% else %}No Data{% endif %}
+                        Average Satisfaction (out of 5): {% if course.get_course_satisfaction %}{{course.get_course_satisfaction}}{% else %}No Data{% endif %}
                         <!--display course metrics-->
                     </td>
                 </tr>

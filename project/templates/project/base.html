@@ -3,14 +3,14 @@
 {% load static %}
 <html>
     <head>
-        <title>
+        <title> <!--title shown at top of tab-->
             CourseCompass
         </title>
         <link rel="stylesheet" href="{% static 'styles-blog.css' %}">
     </head>
 
     <h1>CourseCompass</h1>
-    <body>
+    <body> <!--navbar for every page-->
         <nav style="background-color: orange; text-align: center;">
             <li><a href="{% url 'show_all_courses' %}">Show All Courses</a></li>
             <li><a href="{% url 'show_all_students' %}">Show All Students</a></li>

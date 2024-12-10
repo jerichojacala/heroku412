@@ -5,8 +5,8 @@
 
 
 {% block content %}
-<main class="grid-container"></main>
-
+<main class="grid-container"></main> <!--here to add padding-->
+<!--display student-->
 <student class="featured">
     <div>
         <table>
@@ -48,6 +48,8 @@
         {% for r in s.get_registrations %}
         <td>
         <p><a href="{% url 'show_course_page' r.course.pk %}">{{r.course.subschool}} {{r.course.department}} {{r.course.number}}</a> taught by <a href="{% url 'show_professor_page' r.course.professor.pk %}">{{r.course.professor}}</a> at {{r.course.college}}</p>
+        Average weekly load in hours: {% if r.course.get_reviews %}{{r.course.get_course_load}}{% else %}No Data{% endif %}<br>
+        Average Satisfaction (out of 5): {% if r.course.get_course_satisfaction %}{{r.course.get_course_satisfaction}}{% else %}No Data{% endif %}
         {% if request.user.is_authenticated and request.user == student.user %}
             <p><a href="{% url 'delete_registration' r.pk %}">Delete Course From Schedule</a></p>
         {% endif %}

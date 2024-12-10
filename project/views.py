@@ -16,18 +16,18 @@ from django.shortcuts import redirect
 class ShowAllCoursesView(ListView):
     '''the view to show all Courses'''
     model = Course #the model to display
-    template_name = 'project/show_all_courses.html'
+    template_name = 'project/show_all_courses.html' #the template we work with for the view
     context_object_name = 'courses' #this is the context variables to use in the template
 
     def get_queryset(self):
         '''Returns the queryset of courses based on filters from the search'''
 
-        qs = super().get_queryset()
+        qs = super().get_queryset() #call superclass to get all courses
 
         college = self.request.GET.get('college', '').strip() #refine the queryset based on the search input
-        subschool = self.request.GET.get('subschool', '').strip()
+        subschool = self.request.GET.get('subschool', '').strip() #here we put each criteria in variables
         department = self.request.GET.get('department', '').strip()
-        if college:
+        if college: #and here we filter by the criteria if they are not empty- if they are empty they will filter everything!
             qs = qs.filter(college__icontains=college)
         if subschool:
             qs = qs.filter(subschool__icontains=subschool)
@@ -48,9 +48,9 @@ class ShowAllProfessorsView(ListView):
         qs = super().get_queryset()
 
         first_name = self.request.GET.get('first_name', '').strip() #refine the queryset based on the search input
-        last_name = self.request.GET.get('last_name', '').strip()
+        last_name = self.request.GET.get('last_name', '').strip() #store the criteria as variables here
         college = self.request.GET.get('college', '').strip()
-        if first_name:
+        if first_name: #filter by the search criteria where they exist
             qs = qs.filter(first_name__icontains=first_name)
         if last_name:
             qs = qs.filter(last_name__icontains=last_name)
@@ -62,7 +62,7 @@ class ShowCourseView(DetailView):
     '''Display one Course specified by a primary key'''
     model = Course #the model to display
     template_name = "project/show_course.html"
-    context_object_name = "course"
+    context_object_name = "course" #context object we can refer to as a scriptlet
     
     def get_object(self, queryset=None):
         '''get the course we are on from the URL parameters'''

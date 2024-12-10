@@ -4,14 +4,15 @@
 
 
 {% block content %}
-<main class="grid-container"></main>
-
+<main class="grid-container"></main> <!--here to add padding-->
+<!--display course-->
 <course class="featured">
     <div>
         <table>
                 <tr>
                     <td>
                         <h2>{{course.subschool}} {{course.department}} {{course.number}} taught by <a href="{% url 'show_professor_page' course.professor.pk %}">{{course.professor}}</a></h2>
+                        <h2>at {{course.college}}</h2>
                     </td>
                     
                 </tr>

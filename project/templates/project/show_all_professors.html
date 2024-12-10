@@ -1,0 +1,33 @@
+<!--project/templates/project/show_all_professors.html-->
+<!--Jericho Jacala jjacala@bu.edu-->
+<!--template to show all professors-->
+{% extends 'project/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1>Show All Professors</h1>
+<div>
+    {% include 'project/searchprofessor.html' %}<!--include the search template to refine results-->
+</div>
+{% if professors %}
+<professor>
+    <table>
+        <tr>
+    <!--loop to display each professor-->
+    {% for s in professors %}
+    <td>
+        <h2><a href="{% url 'show_professor_page' s.pk %}">{{s.first_name}} {{s.last_name}}</a></h2>
+        <h3>{{s.college}}</h3>
+    </td>
+    {% if forloop.counter|divisibleby:5 and not forloop.last %} <!--after every fifth professor, a new row is started-->
+        </tr><tr>
+            {% endif %}
+    {% endfor %}
+    </tr>
+    </table>
+</professor>
+{% else %}
+<h2>No Professors Found!</h2>
+{% endif %}
+{% endblock %}

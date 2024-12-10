@@ -8,14 +8,20 @@
 
 <h1>Show All Courses</h1>
 
+
 <course>
+    <div>
+        {% include 'project/search.html' %}<!--include the search template to refine results-->
+    </div>
+    {% if courses %}
     <table>
         <tr>
     <!--loop to display each course-->
     {% for c in courses %}
     <td>
         <h2><a href="{% url 'show_course_page' c.pk %}">{{c.subschool}} {{c.department}} {{c.number}}</a></h2>
-        <br>Taught by <a href="{% url 'show_professor_page' c.professor.pk %}">{{c.professor}}</a>
+        <p>{{ c.college }}</p>
+        Taught by <a href="{% url 'show_professor_page' c.professor.pk %}">{{c.professor}}</a>
     </td>
     {% if forloop.counter|divisibleby:5 and not forloop.last %} <!--after every fifth course, a new row is started-->
         </tr><tr>
@@ -24,4 +30,7 @@
     </tr>
     </table>
 </course>
+{% else %}
+<h2>No Courses Found!</h2>
+{% endif %}
 {% endblock %}

@@ -11,6 +11,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path(r'',views.ShowAllCoursesView.as_view(),name="show_all_courses"),
     path(r'students/',views.ShowAllStudentsView.as_view(),name="show_all_students"),
+    path(r'professors/',views.ShowAllProfessorsView.as_view(),name="show_all_professors"),
     path(r'course/<int:pk>',views.ShowCourseView.as_view(),name="show_course_page"), 
     path(r'professor/<int:pk>',views.ShowProfessorView.as_view(),name="show_professor_page"), 
     path(r'student/',views.ShowStudentView.as_view(),name="show_student_page"),

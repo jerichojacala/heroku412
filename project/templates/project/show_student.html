@@ -26,7 +26,7 @@
     {% endif %}
 </student>
 
-{% if request.user.is_authenticated %}
+{% if request.user.is_authenticated and request.user == student.user %}
 <div>
     <h2><a href="{% url 'create_schedule' student.pk %}">Create a Schedule</a></h2>
 </div>
@@ -36,35 +36,36 @@
     {% if student.get_schedules %}
     <h2>Schedules</h2>
     <table>
-        <tr>
-        {% for s in student.get_schedules %}
         
-            <td>
-                
-        <strong>{{s.title}}</strong><br>Estimated weekly hours: {{s.get_schedule_load}}
+        {% for s in student.get_schedules %}
+        <tr>
+        
+        <td>        
+        <strong>{{s.title}}</strong><br>Estimated Total Weekly Hours: {{s.get_schedule_load}}
+        <br>Average Satisfaction (0-5): {{s.get_schedule_satisfaction}}
         <table>
         <tr>
         {% for r in s.get_registrations %}
         <td>
-        <p><a href="{% url 'show_course_page' r.course.pk %}">{{r.course.department}} {{r.course.number}}</a> taught by <a href="{% url 'show_professor_page' r.course.professor.pk %}">{{r.course.professor}}</a></p>
+        <p><a href="{% url 'show_course_page' r.course.pk %}">{{r.course.department}} {{r.course.number}}</a> taught by <a href="{% url 'show_professor_page' r.course.professor.pk %}">{{r.course.professor}}</a> at {{r.course.college}}</p>
         {% if request.user.is_authenticated and request.user == student.user %}
             <p><a href="{% url 'delete_registration' r.pk %}">Delete Course From Schedule</a></p>
         {% endif %}
-                    
-    </td>      
-            {% endfor %}
-        </tr>  
+        </td>            
+        {% if forloop.counter|divisibleby:4 and not forloop.last %} <!--after every fourth registration, a new row is started-->
+        </tr><tr>
+        {% endif %}
+        {% endfor %}
+        
         </table>
         {% if request.user.is_authenticated and request.user == student.user %}
             <h3><a href="{% url 'course_suggestions' s.pk %}">Add Course to Schedule</a></h3>
             <h3><a href="{% url 'delete_schedule' s.pk %}">Delete Schedule</a></h3>
         {% endif %}
+        
         </td>
 
-        
-        {% if forloop.counter|divisibleby:2 and not forloop.last %} <!--after every fifth profile, a new row is started-->
-        </tr><tr>
-        {% endif %}
+        </tr>
         {% endfor %}
     </tr>
         

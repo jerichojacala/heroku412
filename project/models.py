@@ -90,7 +90,7 @@ class Professor(models.Model):
     '''encapsulate the idea of a professor'''
     first_name = models.TextField(blank=False)
     last_name = models.TextField(blank=False)
-
+    college = models.TextField(blank=False)
     def __str__(self):
         '''Return a string representation of this object'''
         return f'{self.first_name} {self.last_name}'
@@ -101,6 +101,18 @@ class Professor(models.Model):
         #use the ORM to retrieve courses for which the FK is this professor
         courses = Course.objects.filter(professor=self)
         return courses
+    
+    def get_professor_satisfaction(self):
+        '''Returns the average course load in weekly hours'''
+        courses = self.get_courses()
+        avg = 0
+        for course in courses:
+            avg += course.get_course_satisfaction()
+        if len(courses) > 0:
+            avg /= len(courses)
+        else:
+            avg = 0 #just in case we will have no courses for a professor, in this case return 0 to avoid errors
+        return avg
 
 class Schedule(models.Model):
     '''encapsulate the idea of a schedule'''
@@ -126,14 +138,24 @@ class Schedule(models.Model):
             sum += registration.course.get_course_load()
         return sum
     
+    def get_schedule_satisfaction(self):
+        '''Finds the average course satisfaction for a schedule'''
+        registrations = self.get_registrations()
+        avg = 0
+        for registration in registrations:
+            avg += registration.course.get_course_satisfaction()
+        if len(registrations) > 0:
+            avg /= len(registrations)
+        else:
+            avg = 0 #just in case we will have no courses for a professor, in this case return 0 to avoid errors
+        return avg
+    
     def add_registration(self, course):
         '''adds a course to a schedule'''
         if not (Registration.objects.filter(schedule=self, course=course).exists()): 
             Registration.objects.create(schedule=self,course=course) #add friend
 
 
-
-    
 class Registration(models.Model):
     '''encapsulate the idea of a course in a schedule-models many-to-many relationship, much like friend from mini_fb'''
     course  = models.ForeignKey("Course", on_delete=models.CASCADE)

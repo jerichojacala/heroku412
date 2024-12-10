@@ -11,6 +11,7 @@ class CreateReviewForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['difficulty'].label = "Weekly Hours Spent"
+        self.fields['satisfaction'].label = "Satisfaction (Integer from 0-5)"
 
     class Meta:
         '''Associate this HTML form with the Review model'''

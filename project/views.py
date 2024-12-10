@@ -19,6 +19,45 @@ class ShowAllCoursesView(ListView):
     template_name = 'project/show_all_courses.html'
     context_object_name = 'courses' #this is the context variables to use in the template
 
+    def get_queryset(self):
+        '''Returns the queryset of courses based on filters from the search'''
+
+        qs = super().get_queryset()
+
+        college = self.request.GET.get('college', '').strip() #refine the queryset based on the search input
+        subschool = self.request.GET.get('subschool', '').strip()
+        department = self.request.GET.get('department', '').strip()
+        if college:
+            qs = qs.filter(college__icontains=college)
+        if subschool:
+            qs = qs.filter(subschool__icontains=subschool)
+        if department:
+            qs = qs.filter(department__icontains=department)
+    
+        return qs
+    
+class ShowAllProfessorsView(ListView):
+    '''the view to show all Professors'''
+    model = Professor #the model to display
+    template_name = 'project/show_all_professors.html'
+    context_object_name = 'professors' #this is the context variables to use in the template
+
+    def get_queryset(self):
+        '''Returns the queryset of professors based on filters from the search'''
+
+        qs = super().get_queryset()
+
+        first_name = self.request.GET.get('first_name', '').strip() #refine the queryset based on the search input
+        last_name = self.request.GET.get('last_name', '').strip()
+        college = self.request.GET.get('college', '').strip()
+        if first_name:
+            qs = qs.filter(first_name__icontains=first_name)
+        if last_name:
+            qs = qs.filter(last_name__icontains=last_name)
+        if college:
+            qs = qs.filter(college__icontains=college)
+        return qs
+
 class ShowCourseView(DetailView):
     '''Display one Course specified by a primary key'''
     model = Course #the model to display
@@ -29,7 +68,7 @@ class ShowCourseView(DetailView):
         '''get the course we are on from the URL parameters'''
         if 'pk' in self.kwargs: #if we have specified the course we want to go to
             courses = Course.objects.filter(pk=self.kwargs['pk'])
-            course = courses.first()
+            course = courses.first()#get the first course-band-aid solution if multiple students, but good for our purposes
             return course
         
 class ShowProfessorView(DetailView):
@@ -40,7 +79,7 @@ class ShowProfessorView(DetailView):
     def get_object(self, queryset=None): #get prof that we are logged in as
         if 'pk' in self.kwargs: #if we have specified the prof we want to go to
             professors = Professor.objects.filter(pk=self.kwargs['pk'])
-            professor = professors.first()
+            professor = professors.first()#get the first professor-band-aid solution if multiple students, but good for our purposes
             return professor
         
 class ShowStudentView(DetailView):
@@ -51,12 +90,13 @@ class ShowStudentView(DetailView):
     def get_object(self, queryset=None): #get student that we are logged in as
         if 'pk' in self.kwargs: #if we have specified the student we want to go to
             students = Student.objects.filter(pk=self.kwargs['pk'])
-            student = students.first()
+            student = students.first()#get the first student-band-aid solution if multiple students, but good for our purposes
             return student
         else: #otherwise, find the set of students attached to the user we are logged in as and return the first student
             students = Student.objects.filter(user=self.request.user)
             student = students.first()
             return student
+        
         
 class ShowAllStudentsView(ListView):
     '''the view to show all Student'''
@@ -64,12 +104,29 @@ class ShowAllStudentsView(ListView):
     template_name = 'project/show_all_students.html'
     context_object_name = 'students' #this is the context variables to use in the template
 
+    def get_queryset(self):
+        '''Returns the queryset of students based on filters from the search'''
+
+        qs = super().get_queryset() #get the queryset of all students
+
+        college = self.request.GET.get('college', '').strip() #refine the queryset based on the search input
+        first_name = self.request.GET.get('first_name', '').strip()
+        last_name = self.request.GET.get('last_name', '').strip()
+        if college: #filter by the various search criteria
+            qs = qs.filter(college__icontains=college)
+        if first_name:
+            qs = qs.filter(first_name__icontains=first_name)
+        if last_name:
+            qs = qs.filter(last_name__icontains=last_name)
+    
+        return qs
+
 class CreateReviewView(LoginRequiredMixin,CreateView):
     '''
     A view to create a Review for a Course
     '''
 
-    form_class = CreateReviewForm
+    form_class = CreateReviewForm #the form we associate with the view
     template_name = "project/create_review_form.html"
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
@@ -116,8 +173,8 @@ class CreateReviewView(LoginRequiredMixin,CreateView):
         
 class DeleteReviewView(LoginRequiredMixin,DeleteView):
     '''Delete a given Review'''
-    model = Review
-    template_name = 'project/delete_review.html'
+    model = Review #the model to work with
+    template_name = 'project/delete_review.html' #the template
     context_object_name = 'review'
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
@@ -125,7 +182,7 @@ class DeleteReviewView(LoginRequiredMixin,DeleteView):
         # Get the context data from the superclass
         context = super().get_context_data(**kwargs)
 
-        # Get the Review object to find the associated profile
+        # Get the Review object to find the associated course
         review = self.get_object()
         course = review.course
 
@@ -160,7 +217,7 @@ class CreateScheduleView(LoginRequiredMixin,CreateView):
 
     def get_success_url(self) -> str:
         '''Redirect to a URL on successful form submission'''
-        # Get the student related to the status message
+        # Get the student related to the schedule
         student = self.kwargs.get('pk')
         return reverse('show_student_page', kwargs={'pk': student}) #return to the student page on success
     
@@ -197,7 +254,7 @@ class ShowRegistrationsView(LoginRequiredMixin,ListView):
         college = self.request.GET.get('college', '').strip() #refine the queryset based on the search input
         subschool = self.request.GET.get('subschool', '').strip()
         department = self.request.GET.get('department', '').strip()
-        if college:
+        if college: #filter based on search criteria, ignoring capitalization and checking if the attribute contains the criteria, if nothing in the criteria, don't filter
             qs = qs.filter(college__icontains=college)
         if subschool:
             qs = qs.filter(subschool__icontains=subschool)
@@ -258,7 +315,7 @@ class DeleteRegistrationView(LoginRequiredMixin,DeleteView):
 
     def get_success_url(self) -> str:
         '''Redirect to a URL on successful form submission'''
-         # Get the profile related to the status message
+         # Get the student related to the schedule related to the registration
         schedule = self.get_object().schedule
         return reverse('show_student_page', kwargs={'pk': schedule.student.pk}) #return to the page of the student of the schedule the course is registered to
     
@@ -270,7 +327,7 @@ class CreateStudentView(CreateView):
 
     def get_success_url(self) -> str:
         student = self.object #create student as a context variable
-        return reverse('show_student_page', kwargs={'pk':student.pk}) #go to show_profile_page of the student we created
+        return reverse('show_student_page', kwargs={'pk':student.pk}) #go to show_student_page of the student we created
 
     def get_login_url(self) -> str:
         '''return the URL of the login page'''
@@ -289,13 +346,13 @@ class CreateStudentView(CreateView):
         '''This method is called after the form is validated, before saving data to the database'''
         if self.request.POST:
             userform = UserCreationForm(self.request.POST) #reconstruct UserCreationForm from POST data
-            if userform.is_valid():
+            if userform.is_valid(): #if the form is valid
                 user = userform.save() #save and login the user, and attach the user to the Student instance
                 login(self.request,user)
-                form.instance.user = user
-                form.instance.save()
+                form.instance.user = user #attach user to the instance
+                form.instance.save() #save the instance to the database
             else:
-                return self.form_invalid(form)
+                return self.form_invalid(form) #otherwise, handle the form being invalid
 
         #delegate work to superclass form
         return super().form_valid(form)
@@ -310,7 +367,7 @@ class UpdateStudentView(LoginRequiredMixin,UpdateView):
     
     def get_object(self, queryset=None): #get student that we are logged in as
         students = Student.objects.filter(user=self.request.user)
-        student = students.first()
+        student = students.first() #get the first student in case there are many-it's a band-aid but good enough for our purposes
         return student
         
 class DeleteScheduleView(LoginRequiredMixin,DeleteView):
@@ -320,20 +377,20 @@ class DeleteScheduleView(LoginRequiredMixin,DeleteView):
     context_object_name = 'schedule'
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        '''Get the profile field to find its primary key'''
+        '''Get the student field to find its primary key'''
         # Get the context data from the superclass
         context = super().get_context_data(**kwargs)
 
         # Get the Schedule object to find the associated Student
         schedule = self.get_object()
-        student = schedule.student
+        student = schedule.student #get the student from the schedule and store it in a variable
 
-        # Add the Student referred to by the URL into this context
+        # Add the Student referred to by get_object into this context
         context['student'] = student
         return context
 
     def get_success_url(self) -> str:
         '''Redirect to a URL on successful form submission'''
-         # Get the profile related to the status message
+         # Get the student related to the schedule
         student = self.get_object().student
         return reverse('show_student_page', kwargs={'pk': student.pk}) #return to the page of the student

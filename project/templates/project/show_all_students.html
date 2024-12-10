@@ -7,7 +7,10 @@
 {% block content %}
 
 <h1>Show All Students</h1>
-
+<div>
+    {% include 'project/searchstudent.html' %}<!--include the search template to refine results-->
+</div>
+{% if students %}
 <student>
     <table>
         <tr>
@@ -21,9 +24,12 @@
     </td>
     {% if forloop.counter|divisibleby:5 and not forloop.last %} <!--after every fifth student, a new row is started-->
         </tr><tr>
-            {% endif %}
+    {% endif %}
     {% endfor %}
     </tr>
     </table>
 </student>
+{% else %}
+<h2>No Students Found!</h2>
+{% endif %}
 {% endblock %}

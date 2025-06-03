@@ -5,7 +5,7 @@
 
 
 {% block content %}
-<main class="grid-container"></main> <!--here to add padding-->
+
 <!--display student-->
 <student class="featured">
     <div>
@@ -38,33 +38,45 @@
     <table>
         <tr>
             {% for s in student.get_schedules %}
-                <td>        
-                    <strong>{{s.title}}</strong><br>Estimated Total Weekly Hours: {{s.get_schedule_load}}
-                    <br>Average Satisfaction (0-5): {{s.get_schedule_satisfaction}}
-                    <table>
-                        <tr>
-                            {% for r in s.get_registrations %}
-                                <tr>
-                                    <td>
-                                        <p><a href="{% url 'show_course_page' r.course.pk %}">{{r.course.subschool}} {{r.course.department}} {{r.course.number}}</a> taught by <a href="{% url 'show_professor_page' r.course.professor.pk %}">{{r.course.professor}}</a> at {{r.course.college}}</p>
-                                        Average weekly load in hours: {% if r.course.get_reviews %}{{r.course.get_course_load}}{% else %}No Data{% endif %}<br>
-                                        Average Satisfaction (out of 5): {% if r.course.get_course_satisfaction %}{{r.course.get_course_satisfaction}}{% else %}No Data{% endif %}
-                                        {% if request.user.is_authenticated and request.user == student.user %}
-                                            <p><a href="{% url 'delete_registration' r.pk %}">Delete Course From Schedule</a></p>
-                                        {% endif %}
-                                    </td>            
-                                </tr>
-                            {% endfor %}
-                        </tr>
+                <td class="schedule-item">
+                    <div class="schedule">        
+                        <strong>{{s.title}}</strong><br>Estimated Total Weekly Hours: {{s.get_schedule_load}}
+                        <br>Average Satisfaction (0-5): {{s.get_schedule_satisfaction}}
+                        <table>
+                            <tr>
+                                {% for r in s.get_registrations %}
+                                    <tr>
+                                        <td class="rating">
+                                            <h5>RATING</h5>
+                                            {% if r.course.get_course_satisfaction %}{{r.course.get_course_satisfaction}}{% else %}No Data{% endif %}
+                                        </td>
+                                        <td>
+                                            <h4>
+                                                <a href="{% url 'show_course_page' r.course.pk %}">{{r.course.subschool}} {{r.course.department}} {{r.course.number}}</a> <br> 
+                                                <a href="{% url 'show_professor_page' r.course.professor.pk %}">{{r.course.professor}}</a> <br> 
+                                                {{r.course.college}}
+                                            </h4>
+                                            Average weekly load in hours: {% if r.course.get_reviews %}{{r.course.get_course_load}}{% else %}No Data{% endif %}<br>
+                                            Average Satisfaction (out of 5): {% if r.course.get_course_satisfaction %}{{r.course.get_course_satisfaction}}{% else %}No Data{% endif %}
+                                            {% if request.user.is_authenticated and request.user == student.user %}
+                                                <p><a href="{% url 'delete_registration' r.pk %}">Delete Course From Schedule</a></p>
+                                            {% endif %}
+                                        </td>            
+                                    </tr>
+                                {% endfor %}
+                            </tr>
 
-                    </table>
-                    {% if request.user.is_authenticated and request.user == student.user %}
-                        <h3><a href="{% url 'course_suggestions' s.pk %}">Add Course to Schedule</a></h3>
-                        <h3><a href="{% url 'delete_schedule' s.pk %}">Delete Schedule</a></h3>
-                    {% endif %}
-                </td>
+                        </table>
+                        {% if request.user.is_authenticated and request.user == student.user %}
+                            <h3><a href="{% url 'course_suggestions' s.pk %}">Add Course to Schedule</a></h3>
+                            <h3><a href="{% url 'delete_schedule' s.pk %}">Delete Schedule</a></h3>
+                        {% endif %}
+                        </div>
+                    </td>
 
-    
+                {% if forloop.counter|divisibleby:2 and not forloop.last %} <!--after every second schedule, a new row is started-->
+                    </tr><tr>
+                {% endif %}
             {% endfor %}
         
     

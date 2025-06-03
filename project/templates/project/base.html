@@ -7,18 +7,22 @@
         <title> 
             CourseCompass
         </title>
-        <link rel="stylesheet" href="{% static 'styles-blog.css' %}">
+        <link rel="stylesheet" href="{% static 'coursecompass-style.css' %}">
     </head>
-
-    <h1>CourseCompass</h1>
+    <header class="header">
+        <h1 style="text-align: left;">CourseCompass</h1>
+    </header>
     <body> <!--navbar for every page-->
-        <nav style="background-color: orange; text-align: center;">
+        <div>
+    <nav class="navbar">  
+    <ul style="background-color: orange; text-align: center;">
             <li><a href="{% url 'show_all_courses' %}">Show All Courses</a></li>
             <li><a href="{% url 'show_all_students' %}">Show All Students</a></li>
             <li><a href="{% url 'show_all_professors' %}">Show All Professors</a></li>
             {% if request.user.is_authenticated %} <!--check if we are logged in-->
-            Logged in as: {{request.user}}
+            
             <li><a href="{% url 'show_student_page' %}">My Profile</a></li>
+            Logged in as: {{request.user}}
                 <form action="{% url 'logout' %}" method="POST">
                     {% csrf_token %}<!--token to ensure that this came from a valid form-->
                     <input type="submit" value="Logout">
@@ -27,11 +31,14 @@
                 <li><a href="{% url 'login' %}">Login</a></li>
                 <li><a href="{% url 'create_student' %}">Create Profile</a></li>
                 {% endif %}
-        </nav>
+            </ul>
+    </nav>  
+        </div>
+        <div>
         <!--fill in this section with specific page detail-->
         {% block content %}
         <!--fill in this section with specific page detail-->
         {% endblock %}
-
+        </div>
     </body>
 </html>

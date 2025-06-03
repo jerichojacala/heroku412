@@ -1,0 +1,98 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            min-height: 100vh;
+        }
+        
+        .header {
+            grid-column: 1 / -1;
+            background-color: #333;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .navbar {
+            background-color: orange;
+            padding: 20px 0;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+        }
+        
+        .navbar ul {
+            list-style-type: none;
+        }
+        
+        .navbar li {
+            margin-bottom: 5px;
+        }
+        
+        .navbar a {
+            display: block;
+            color: #333;
+            text-decoration: none;
+            padding: 10px 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .navbar a:hover {
+            background-color: #e69500;
+            color: white;
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        .auth-info {
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .auth-info form {
+            margin-top: 10px;
+        }
+        
+        input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+
+        table, th, td{
+    margin: auto;
+    text-align: center;
+    border: 1px solid black;
+    background: darkgray;
+}
+
+h2, h3,h4 {
+    color: rgb(83, 83, 83); text-align: center;
+}
+
+h1{
+    color: coral; text-align: center;
+}
+
+p {
+    text-align: center;
+}
+
+form{
+    text-align: center;
+}
